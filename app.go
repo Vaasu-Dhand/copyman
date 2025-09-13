@@ -14,8 +14,9 @@ import (
 
 // App struct
 type App struct {
-	ctx      context.Context
-	settings *Settings
+	// ctx           context.Context
+	settings      *Settings
+	hotkeyManager *HotkeyManager
 }
 
 // Settings represents the application settings
@@ -48,6 +49,11 @@ func (a *App) OnStartup(ctx context.Context) {
 
 // OnShutdown is called when the app is about to quit
 func (a *App) OnShutdown(ctx context.Context) {
+	// Stop hotkey listener
+	if a.hotkeyManager != nil {
+		a.hotkeyManager.StopListening()
+	}
+
 	// Save settings before shutdown
 	a.saveSettings()
 }
@@ -174,8 +180,12 @@ func (a *App) saveSettings() error {
 
 // registerHotkeys registers global hotkeys
 func (a *App) registerHotkeys() {
-	// Note: Global hotkey registration would require a platform-specific library
-	// For macOS, you might want to use a library like github.com/robotn/gohook
-	// This is a placeholder for the hotkey registration logic
-	log.Println("Hotkey registration would be implemented here")
+	a.hotkeyManager = NewHotkeyManager(a)
+
+	// Start listening in a separate goroutine
+	go func() {
+		a.hotkeyManager.StartListening()
+	}()
+
+	log.Println("Global hotkeys registered")
 }

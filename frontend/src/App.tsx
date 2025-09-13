@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { GetSettings, SaveSettings, CopyToClipboard, HideOverlay } from '../wailsjs/go/main/App';
+import { GetSettings, SaveSettings, CopyToClipboard, HideOverlay } from '../wailsjs/go/main/App';
 import './App.css';
 
 interface Settings {
