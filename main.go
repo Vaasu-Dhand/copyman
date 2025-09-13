@@ -20,8 +20,8 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "CopyMan",
-		Width:  400,
-		Height: 500,
+		Width:  700, // Increased for keyboard feel
+		Height: 450, // Better proportions for keyboard layout
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
@@ -29,12 +29,17 @@ func main() {
 		OnStartup:        app.OnStartup,
 		OnShutdown:       app.OnShutdown,
 		Frameless:        true,
-		WindowStartState: options.Minimised,
+		StartHidden:      true,
+		WindowStartState: options.Minimised, // Start hidden
+		AlwaysOnTop:      false,             // We control this programmatically
+		DisableResize:    false,             // Allow resize for better UX
+		// MinWidth:         600,               // Minimum size constraints
+		// MinHeight:        400,
 		Mac: &mac.Options{
 			TitleBar: &mac.TitleBar{
 				TitlebarAppearsTransparent: true,
 				HideTitle:                  true,
-				HideTitleBar:               false,
+				HideTitleBar:               true, // Completely frameless
 				FullSizeContent:            true,
 				UseToolbar:                 false,
 				HideToolbarSeparator:       true,

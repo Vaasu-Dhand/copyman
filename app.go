@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"golang.design/x/clipboard"
@@ -14,9 +15,11 @@ import (
 
 // App struct
 type App struct {
-	ctx           context.Context
-	settings      *Settings
-	hotkeyManager *HotkeyManager
+	ctx            context.Context
+	settings       *Settings
+	hotkeyManager  *HotkeyManager
+	isVisible      bool
+	lastToggleTime int64 // Timestamp to prevent rapid toggling
 }
 
 // Settings represents the application settings
@@ -33,6 +36,8 @@ func NewApp() *App {
 // OnStartup is called when the app starts up
 func (a *App) OnStartup(ctx context.Context) {
 	a.ctx = ctx
+	a.isVisible = false
+	a.lastToggleTime = 0
 
 	// Initialize clipboard
 	err := clipboard.Init()
@@ -58,8 +63,13 @@ func (a *App) OnShutdown(ctx context.Context) {
 	a.saveSettings()
 }
 
+// Greet returns a greeting for the given name
+func (a *App) Greet(name string) string {
+	return fmt.Sprintf("Hello %s, welcome to CopyMan!", name)
+}
+
 // GetSettings returns the current settings
-func (a *App) GetSettings() *Settings {
+func (a *App) GetSettings() Settings {
 	if a.settings == nil {
 		a.settings = &Settings{
 			Theme: "light",
@@ -76,12 +86,12 @@ func (a *App) GetSettings() *Settings {
 			},
 		}
 	}
-	return a.settings
+	return *a.settings
 }
 
 // SaveSettings saves the settings to file
-func (a *App) SaveSettings(settings *Settings) error {
-	a.settings = settings
+func (a *App) SaveSettings(settings Settings) error {
+	a.settings = &settings
 	return a.saveSettings()
 }
 
@@ -92,32 +102,71 @@ func (a *App) CopyToClipboard(text string) error {
 	}
 
 	clipboard.Write(clipboard.FmtText, []byte(text))
+	log.Printf("CopyMan: Text copied to clipboard (length: %d chars)", len(text))
 
-	// Hide the window after copying
-	runtime.WindowHide(a.ctx)
+	return nil
+}
+
+// CopyAndFlash copies text and triggers visual feedback
+func (a *App) CopyAndFlash(text string, keyNumber string) error {
+	if text == "" {
+		return fmt.Errorf("empty text")
+	}
+
+	clipboard.Write(clipboard.FmtText, []byte(text))
+	log.Printf("CopyMan: Key %s copied to clipboard (length: %d chars)", keyNumber, len(text))
+
+	// Emit event to frontend for visual feedback
+	runtime.EventsEmit(a.ctx, "key-flashed", keyNumber)
 
 	return nil
 }
 
 // ShowOverlay shows the main overlay window
 func (a *App) ShowOverlay() {
-	runtime.WindowShow(a.ctx)
-	runtime.WindowSetAlwaysOnTop(a.ctx, true)
+	if !a.isVisible {
+		runtime.WindowShow(a.ctx)
+		runtime.WindowSetAlwaysOnTop(a.ctx, true)
+		runtime.WindowCenter(a.ctx)
+		a.isVisible = true
+		log.Println("CopyMan: Overlay window shown")
+	}
 }
 
 // HideOverlay hides the main overlay window
 func (a *App) HideOverlay() {
-	runtime.WindowHide(a.ctx)
+	if a.isVisible {
+		runtime.WindowHide(a.ctx)
+		a.isVisible = false
+		log.Println("CopyMan: Overlay window hidden")
+	}
 }
 
-// ToggleOverlay toggles the overlay visibility
+// ToggleOverlay toggles the overlay visibility with debouncing
 func (a *App) ToggleOverlay() {
-	// This will be called by the global hotkey
-	runtime.WindowShow(a.ctx)
-	runtime.WindowSetAlwaysOnTop(a.ctx, true)
+	currentTime := time.Now().UnixMilli()
+
+	// Prevent rapid toggling (debounce 300ms)
+	if currentTime-a.lastToggleTime < 300 {
+		log.Println("CopyMan: Toggle ignored - too rapid")
+		return
+	}
+
+	a.lastToggleTime = currentTime
+
+	if a.isVisible {
+		a.HideOverlay()
+	} else {
+		a.ShowOverlay()
+	}
 }
 
-// GetSettingsPath returns the path to the settings file
+// IsVisible returns whether the window is currently visible
+func (a *App) IsVisible() bool {
+	return a.isVisible
+}
+
+// getSettingsPath returns the path to the settings file
 func (a *App) getSettingsPath() string {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
@@ -142,7 +191,8 @@ func (a *App) loadSettings() {
 	data, err := os.ReadFile(settingsPath)
 	if err != nil {
 		// File doesn't exist, use defaults
-		a.settings = a.GetSettings()
+		defaultSettings := a.GetSettings()
+		a.settings = &defaultSettings
 		return
 	}
 
@@ -150,7 +200,8 @@ func (a *App) loadSettings() {
 	err = json.Unmarshal(data, &settings)
 	if err != nil {
 		log.Printf("Failed to unmarshal settings: %v", err)
-		a.settings = a.GetSettings()
+		defaultSettings := a.GetSettings()
+		a.settings = &defaultSettings
 		return
 	}
 

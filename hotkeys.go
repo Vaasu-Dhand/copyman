@@ -28,33 +28,34 @@ func (h *HotkeyManager) StartListening() {
 	}
 
 	h.running = true
-	log.Println("Starting hotkey listener...")
+	log.Println("CopyMan: Starting hotkey listener...")
 
-	// Register Cmd+Shift+C to show overlay
-	hook.Register(hook.KeyDown, []string{"cmd", "shift", "c"}, func(e hook.Event) {
-		log.Println("Hotkey triggered: Cmd+Shift+C")
-		h.app.ShowOverlay()
+	// Register Ctrl+Shift+Space to toggle overlay
+	hook.Register(hook.KeyDown, []string{"ctrl", "shift", "space"}, func(e hook.Event) {
+		log.Println("CopyMan: Toggle hotkey triggered (Ctrl+Shift+Space)")
+		h.app.ToggleOverlay()
 	})
 
-	// Register Escape to hide overlay when window is focused
-	hook.Register(hook.KeyDown, []string{"escape"}, func(e hook.Event) {
-		log.Println("Escape key pressed")
-		h.app.HideOverlay()
-	})
+	// DON'T register global Escape - let the frontend handle it when window has focus
 
-	// Register number keys 1-9 with Cmd+Shift for quick copy
+	// Register number keys 1-9 with Cmd+Shift for quick copy with flash
 	for i := 1; i <= 9; i++ {
 		keyStr := strconv.Itoa(i)
 		// Capture the current value of keyStr for the closure
 		capturedKey := keyStr
 		hook.Register(hook.KeyDown, []string{"cmd", "shift", capturedKey}, func(e hook.Event) {
-			settings := h.app.GetSettings()
-			if text, exists := settings.KeyBindings[capturedKey]; exists && text != "" {
-				log.Printf("Quick copy triggered for key %s: %s", capturedKey, text)
-				h.app.CopyToClipboard(text)
+			if h.app.IsVisible() { // Only work when overlay is visible
+				settings := h.app.GetSettings()
+				if text, exists := settings.KeyBindings[capturedKey]; exists && text != "" {
+					log.Printf("CopyMan: Quick copy key %s triggered", capturedKey)
+					h.app.CopyAndFlash(text, capturedKey)
+				}
 			}
 		})
 	}
+
+	log.Println("CopyMan: Hotkeys registered - Ctrl+Shift+Space to toggle, Cmd+Shift+1-9 for quick copy")
+	log.Println("CopyMan: Escape key handled by UI when window has focus")
 
 	// Start the hook event loop
 	s := hook.Start()
@@ -66,6 +67,6 @@ func (h *HotkeyManager) StopListening() {
 	if h.running {
 		hook.End()
 		h.running = false
-		log.Println("Hotkey listener stopped")
+		log.Println("CopyMan: Hotkey listener stopped")
 	}
 }
