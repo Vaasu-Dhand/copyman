@@ -14,7 +14,7 @@ import (
 
 // App struct
 type App struct {
-	// ctx           context.Context
+	ctx           context.Context
 	settings      *Settings
 	hotkeyManager *HotkeyManager
 }
