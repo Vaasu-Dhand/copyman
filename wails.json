@@ -1,0 +1,23 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "copyman",
+  "outputfilename": "copyman",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Vaasu Dhand",
+    "email": "dhandvaasu@gmail.com"
+  },
+  "info": {
+    "companyName": "CopyMan",
+    "productName": "CopyMan",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright © 2025, CopyMan",
+    "comments": "Modern clipboard manager for macOS"
+  },
+  "nsisType": "multiple",
+  "obfuscated": false,
+  "garbleargs": ""
+}
