@@ -43,6 +43,9 @@ func main() {
 			WebviewIsTransparent: true,
 			WindowIsTranslucent:  true,
 		},
+		Bind: []interface{}{
+			app,
+		},
 	})
 
 	if err != nil {
