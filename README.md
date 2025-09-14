@@ -1,205 +1,126 @@
 # Copyman
 
-A modern, minimalistic clipboard manager for macOS built with Wails, React, and TypeScript.
+A lightweight, fast clipboard manager for macOS that puts your most-used text snippets at your fingertips.
+
+![Copyman Screenshot](frontend/public/favicon-light.png)
 
 ## Features
 
-- 🎨 **Modern Design**: Clean, minimalistic interface with light/dark theme support
-- ⌨️ **Global Hotkeys**: Quick access with `Cmd+Shift+C` and number key shortcuts
-- 📋 **9 Quick Slots**: Bind frequently used text to number keys 1-9
-- 🔄 **Persistent Settings**: Your configurations are saved between sessions
-- 👁️ **Overlay Mode**: Transparent overlay that doesn't interrupt your workflow
-- 🎯 **Lightweight**: Built with native performance using Wails
+- 🚀 **Lightning Fast**: Access your clipboard with `Ctrl+Shift+Space`
+- 🔢 **Quick Copy**: Bind text to number keys 1-9 for instant copying
+- 🎨 **Beautiful Interface**: Clean, modern design with dark/light themes
+- ⌨️ **Global Hotkeys**: Works from anywhere on your Mac
+- 💾 **Persistent Storage**: Your text snippets are saved between sessions
+- 🪶 **Lightweight**: Minimal resource usage, stays out of your way
 
 ## Installation
 
-### Prerequisites
+### Download Pre-built App (Recommended)
 
-- Go 1.21 or later
-- Node.js 16 or later
-- Wails v2 CLI tool
+1. Go to the [Releases](https://github.com/yourusername/copyman/releases) page
+2. Download the latest `Copyman-darwin-universal.zip`
+3. Unzip and drag `Copyman.app` to your Applications folder
+4. Right-click the app and select "Open" (required for first launch due to macOS security)
 
-### Install Wails CLI
+### Grant Permissions
 
-```bash
-go install github.com/wailsapp/wails/v2/cmd/wails@latest
-```
+Copyman needs accessibility permissions to work with global hotkeys:
 
-### Setup Project
-
-1. Clone the repository:
-```bash
-git clone <your-repo-url>
-cd copyman
-```
-
-2. Install dependencies:
-```bash
-make install
-```
-
-3. Run in development mode:
-```bash
-make dev
-```
-
-## Building
-
-### For Development
-```bash
-make dev
-```
-
-### For Production
-```bash
-make build
-```
-
-### For macOS Distribution (Universal Binary)
-```bash
-make build-darwin
-make package-mac
-```
-
-This creates a universal binary supporting both Intel and Apple Silicon Macs.
+1. Open **System Preferences** → **Security & Privacy** → **Privacy** → **Accessibility**
+2. Click the lock icon and enter your password
+3. Click the **+** button and add `Copyman.app`
+4. Make sure the checkbox next to Copyman is checked
 
 ## Usage
 
-### Global Hotkeys
+### Basic Workflow
 
-- **`Cmd+Shift+C`**: Open/show the Copyman overlay
-- **`Escape`**: Close/hide the overlay
-- **`1-9`**: Copy the text bound to that number key (overlay must be visible)
-- **`Cmd+Shift+1-9`**: Quick copy without opening overlay (when implemented)
+1. **Show Copyman**: Press `Ctrl+Shift+Space`
+2. **Set up text snippets**: Click ⚙️ Settings and bind text to number keys 1-9
+3. **Quick copy**: Press `Cmd+Shift+1-9` to instantly copy and paste your snippets
 
-### Setting Up Text Shortcuts
+### Hotkeys
 
-1. Open Copyman (Cmd+Shift+C)
-2. Click the "Settings" button
-3. Enter text for each number key (1-9)
-4. Settings are automatically saved
-5. Use the number keys to instantly copy your predefined text
+- `Ctrl+Shift+Space` - Toggle Copyman overlay
+- `Cmd+Shift+1-9` - Quick copy bound text snippets
+- `Esc` - Close overlay (when focused)
 
-### Examples
+### Examples of What to Store
 
-Bind commonly used text like:
-- Email addresses
-- Phone numbers
-- Frequently used passwords
+- Email signatures
+- Common responses
 - Code snippets
-- Standard responses
-- Social media handles
+- Addresses and phone numbers
+- URLs you use frequently
+- Emoji combinations
+- Meeting links
 
-## Configuration
+## Building from Source
 
-Settings are stored in `~/.config/copyman/settings.json`:
+### Prerequisites
 
-```json
-{
-  "theme": "light",
-  "keyBindings": {
-    "1": "your-email@example.com",
-    "2": "+1 (555) 123-4567",
-    "3": "Thank you for your message!",
-    ...
-  }
-}
-```
+- Go 1.19 or later
+- Node.js 16 or later
+- Wails CLI: `go install github.com/wailsapp/wails/v2/cmd/wails@latest`
 
-## Architecture
-
-- **Backend**: Go with Wails v2 framework
-- **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: CSS with CSS custom properties for theming
-- **Build**: Native desktop app compilation
-- **Hotkeys**: Cross-platform global hotkey support
-
-## Development
-
-### Project Structure
-
-```
-copyman/
-├── app.go              # Main application logic
-├── main.go             # Application entry point
-├── hotkeys.go          # Global hotkey handling
-├── wails.json          # Wails configuration
-├── go.mod              # Go dependencies
-├── frontend/
-│   ├── src/
-│   │   ├── App.tsx     # Main React component
-│   │   ├── App.css     # Styling
-│   │   └── main.tsx    # React entry point
-│   ├── package.json    # Frontend dependencies
-│   └── vite.config.ts  # Vite configuration
-└── Makefile           # Build commands
-```
-
-### Available Commands
+### Development
 
 ```bash
-make dev          # Run in development mode
-make build        # Build for current platform
-make build-darwin # Build for macOS (universal)
-make clean        # Clean build artifacts
-make install      # Install dependencies
-make test         # Run tests
-make package-mac  # Package for macOS distribution
+# Clone the repository
+git clone https://github.com/yourusername/copyman.git
+cd copyman
+
+# Install dependencies
+wails build
+
+# Run in development mode
+wails dev
 ```
 
-## Dependencies
+### Building for Distribution
 
-### Go Dependencies
-- `github.com/wailsapp/wails/v2` - Desktop app framework
-- `github.com/robotn/gohook` - Global hotkey support
-- `golang.design/x/clipboard` - Clipboard operations
+```bash
+# Build for macOS
+wails build -platform darwin/universal
 
-### Frontend Dependencies
-- `react` - UI framework
-- `typescript` - Type safety
-- `vite` - Build tool
+# The app will be created in build/bin/
+```
 
 ## Contributing
 
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+### Development Setup
+
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+## Troubleshooting
+
+### App won't open
+- Make sure you've granted accessibility permissions
+- Try right-clicking and selecting "Open" instead of double-clicking
+
+### Hotkeys not working
+- Check that Copyman has accessibility permissions in System Preferences
+- Make sure no other app is using the same hotkey combinations
+
+### Settings not saving
+- Check that you have write permissions to `~/.config/copyman/`
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Troubleshooting
+## Acknowledgments
 
-### Global Hotkeys Not Working
+- Built with [Wails](https://wails.io/) - Go + Web frontend framework
+- Icons from [Lucide](https://lucide.dev/)
+- Global hotkeys powered by [robotn/gohook](https://github.com/robotn/gohook)
 
-The global hotkey functionality requires proper permissions on macOS:
+---
 
-1. Go to System Preferences → Security & Privacy → Privacy
-2. Select "Accessibility" from the left panel
-3. Add Copyman to the list of allowed applications
-
-### Build Issues
-
-If you encounter build issues:
-
-1. Ensure you have the latest version of Wails CLI
-2. Check that Go and Node.js versions meet requirements
-3. Try cleaning and reinstalling dependencies:
-   ```bash
-   make clean
-   make install
-   ```
-
-### Performance Issues
-
-For optimal performance:
-- Keep text bindings reasonably short
-- Use the app in overlay mode rather than keeping it always visible
-- Consider using the direct hotkey shortcuts (Cmd+Shift+1-9) for fastest access
-
-## Support
-
-For issues and feature requests, please use the [GitHub Issues](https://github.com/vaasu-dhand/copyman/issues) page.
+**Made with ❤️ for productivity enthusiasts**
