@@ -36,26 +36,39 @@ func (h *HotkeyManager) StartListening() {
 		h.app.ToggleOverlay()
 	})
 
-	// DON'T register global Escape - let the frontend handle it when window has focus
-
 	// Register number keys 1-9 with Cmd+Shift for quick copy with flash
 	for i := 1; i <= 9; i++ {
 		keyStr := strconv.Itoa(i)
 		// Capture the current value of keyStr for the closure
 		capturedKey := keyStr
-		hook.Register(hook.KeyDown, []string{"cmd", "shift", capturedKey}, func(e hook.Event) {
-			if h.app.IsVisible() { // Only work when overlay is visible
-				settings := h.app.GetSettings()
-				if text, exists := settings.KeyBindings[capturedKey]; exists && text != "" {
-					log.Printf("Copyman: Quick copy key %s triggered", capturedKey)
-					h.app.CopyAndFlash(text, capturedKey)
+		hook.Register(hook.KeyDown, []string{"ctrl", "shift", capturedKey}, func(e hook.Event) {
+			log.Printf("Copyman: Hotkey Ctrl+Shift+%s detected", capturedKey)
+
+			// Always handle the event to prevent system beep
+			settings := h.app.GetSettings()
+			if text, exists := settings.KeyBindings[capturedKey]; exists && text != "" {
+				log.Printf("Copyman: Quick copy key %s triggered with text", capturedKey)
+				h.app.CopyAndFlash(text, capturedKey)
+
+				// Hide the window after copying if it's visible
+				if h.app.IsVisible() {
+					log.Printf("Copyman: Hiding window after copying key %s", capturedKey)
+					h.app.HideOverlay()
+				}
+			} else {
+				log.Printf("Copyman: No text bound to key %s, but event consumed to prevent beep", capturedKey)
+
+				// Still hide the window if visible and key was pressed
+				if h.app.IsVisible() {
+					log.Printf("Copyman: Hiding window after empty key %s press", capturedKey)
+					h.app.HideOverlay()
 				}
 			}
 		})
 	}
 
 	log.Println("Copyman: Hotkeys registered - Ctrl+Shift+Space to toggle, Cmd+Shift+1-9 for quick copy")
-	log.Println("Copyman: Escape key handled by UI when window has focus")
+	log.Println("Copyman: Window will auto-hide after copying")
 
 	// Start the hook event loop
 	s := hook.Start()

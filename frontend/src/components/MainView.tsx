@@ -108,7 +108,7 @@ const MainView: React.FC<MainViewProps> = ({ settings, onNavigateToSettings }) =
                         ⚙️ Settings
                     </button>
                     <div className="close-hint">
-                        Press Esc to close • ⌘⇧C to open
+                        Press Esc to close • ⌃⇧C to open
                     </div>
                 </div>
             </div>
