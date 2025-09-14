@@ -11,10 +11,10 @@
     "email": "dhandvaasu@gmail.com"
   },
   "info": {
-    "companyName": "CopyMan",
-    "productName": "CopyMan",
+    "companyName": "Copyman",
+    "productName": "Copyman",
     "productVersion": "1.0.0",
-    "copyright": "Copyright © 2025, CopyMan",
+    "copyright": "Copyright © 2025, Copyman",
     "comments": "Modern clipboard manager for macOS"
   },
   "nsisType": "multiple",

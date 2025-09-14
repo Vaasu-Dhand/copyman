@@ -28,11 +28,11 @@ func (h *HotkeyManager) StartListening() {
 	}
 
 	h.running = true
-	log.Println("CopyMan: Starting hotkey listener...")
+	log.Println("Copyman: Starting hotkey listener...")
 
 	// Register Ctrl+Shift+Space to toggle overlay
 	hook.Register(hook.KeyDown, []string{"ctrl", "shift", "space"}, func(e hook.Event) {
-		log.Println("CopyMan: Toggle hotkey triggered (Ctrl+Shift+Space)")
+		log.Println("Copyman: Toggle hotkey triggered (Ctrl+Shift+Space)")
 		h.app.ToggleOverlay()
 	})
 
@@ -47,15 +47,15 @@ func (h *HotkeyManager) StartListening() {
 			if h.app.IsVisible() { // Only work when overlay is visible
 				settings := h.app.GetSettings()
 				if text, exists := settings.KeyBindings[capturedKey]; exists && text != "" {
-					log.Printf("CopyMan: Quick copy key %s triggered", capturedKey)
+					log.Printf("Copyman: Quick copy key %s triggered", capturedKey)
 					h.app.CopyAndFlash(text, capturedKey)
 				}
 			}
 		})
 	}
 
-	log.Println("CopyMan: Hotkeys registered - Ctrl+Shift+Space to toggle, Cmd+Shift+1-9 for quick copy")
-	log.Println("CopyMan: Escape key handled by UI when window has focus")
+	log.Println("Copyman: Hotkeys registered - Ctrl+Shift+Space to toggle, Cmd+Shift+1-9 for quick copy")
+	log.Println("Copyman: Escape key handled by UI when window has focus")
 
 	// Start the hook event loop
 	s := hook.Start()
@@ -67,6 +67,6 @@ func (h *HotkeyManager) StopListening() {
 	if h.running {
 		hook.End()
 		h.running = false
-		log.Println("CopyMan: Hotkey listener stopped")
+		log.Println("Copyman: Hotkey listener stopped")
 	}
 }

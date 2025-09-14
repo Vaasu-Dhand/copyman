@@ -19,7 +19,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "CopyMan",
+		Title:  "Copyman",
 		Width:  700, // Increased for keyboard feel
 		Height: 450, // Better proportions for keyboard layout
 		AssetServer: &assetserver.Options{
@@ -28,25 +28,23 @@ func main() {
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.OnStartup,
 		OnShutdown:       app.OnShutdown,
-		Frameless:        true,
+		Frameless:        true, // Keep frameless but add custom titlebar
 		StartHidden:      true,
 		WindowStartState: options.Minimised, // Start hidden
 		AlwaysOnTop:      false,             // We control this programmatically
 		DisableResize:    false,             // Allow resize for better UX
-		// MinWidth:         600,               // Minimum size constraints
-		// MinHeight:        400,
 		Mac: &mac.Options{
 			TitleBar: &mac.TitleBar{
-				TitlebarAppearsTransparent: true,
-				HideTitle:                  true,
-				HideTitleBar:               true, // Completely frameless
-				FullSizeContent:            true,
-				UseToolbar:                 false,
-				HideToolbarSeparator:       true,
+				TitlebarAppearsTransparent: true,  // Transparent titlebar
+				HideTitle:                  true,  // Hide the title text
+				HideTitleBar:               false, // Show titlebar area
+				FullSizeContent:            true,  // Content extends under titlebar
+				UseToolbar:                 true,  // Use toolbar style
+				HideToolbarSeparator:       true,  // Hide separator line
 			},
 			Appearance:           mac.NSAppearanceNameAqua,
-			WebviewIsTransparent: true,
-			WindowIsTranslucent:  true,
+			WebviewIsTransparent: true,  // Keep transparent
+			WindowIsTranslucent:  false, // Window background opaque
 		},
 		Bind: []interface{}{
 			app,

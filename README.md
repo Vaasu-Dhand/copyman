@@ -1,4 +1,4 @@
-# CopyMan
+# Copyman
 
 A modern, minimalistic clipboard manager for macOS built with Wails, React, and TypeScript.
 
@@ -67,14 +67,14 @@ This creates a universal binary supporting both Intel and Apple Silicon Macs.
 
 ### Global Hotkeys
 
-- **`Cmd+Shift+C`**: Open/show the CopyMan overlay
+- **`Cmd+Shift+C`**: Open/show the Copyman overlay
 - **`Escape`**: Close/hide the overlay
 - **`1-9`**: Copy the text bound to that number key (overlay must be visible)
 - **`Cmd+Shift+1-9`**: Quick copy without opening overlay (when implemented)
 
 ### Setting Up Text Shortcuts
 
-1. Open CopyMan (Cmd+Shift+C)
+1. Open Copyman (Cmd+Shift+C)
 2. Click the "Settings" button
 3. Enter text for each number key (1-9)
 4. Settings are automatically saved
@@ -179,7 +179,7 @@ The global hotkey functionality requires proper permissions on macOS:
 
 1. Go to System Preferences → Security & Privacy → Privacy
 2. Select "Accessibility" from the left panel
-3. Add CopyMan to the list of allowed applications
+3. Add Copyman to the list of allowed applications
 
 ### Build Issues
 

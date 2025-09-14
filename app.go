@@ -65,7 +65,7 @@ func (a *App) OnShutdown(ctx context.Context) {
 
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, welcome to CopyMan!", name)
+	return fmt.Sprintf("Hello %s, welcome to Copyman!", name)
 }
 
 // GetSettings returns the current settings
@@ -102,7 +102,7 @@ func (a *App) CopyToClipboard(text string) error {
 	}
 
 	clipboard.Write(clipboard.FmtText, []byte(text))
-	log.Printf("CopyMan: Text copied to clipboard (length: %d chars)", len(text))
+	log.Printf("Copyman: Text copied to clipboard (length: %d chars)", len(text))
 
 	return nil
 }
@@ -114,7 +114,7 @@ func (a *App) CopyAndFlash(text string, keyNumber string) error {
 	}
 
 	clipboard.Write(clipboard.FmtText, []byte(text))
-	log.Printf("CopyMan: Key %s copied to clipboard (length: %d chars)", keyNumber, len(text))
+	log.Printf("Copyman: Key %s copied to clipboard (length: %d chars)", keyNumber, len(text))
 
 	// Emit event to frontend for visual feedback
 	runtime.EventsEmit(a.ctx, "key-flashed", keyNumber)
@@ -129,7 +129,7 @@ func (a *App) ShowOverlay() {
 		runtime.WindowSetAlwaysOnTop(a.ctx, true)
 		runtime.WindowCenter(a.ctx)
 		a.isVisible = true
-		log.Println("CopyMan: Overlay window shown")
+		log.Println("Copyman: Overlay window shown")
 	}
 }
 
@@ -138,7 +138,7 @@ func (a *App) HideOverlay() {
 	if a.isVisible {
 		runtime.WindowHide(a.ctx)
 		a.isVisible = false
-		log.Println("CopyMan: Overlay window hidden")
+		log.Println("Copyman: Overlay window hidden")
 	}
 }
 
@@ -148,7 +148,7 @@ func (a *App) ToggleOverlay() {
 
 	// Prevent rapid toggling (debounce 300ms)
 	if currentTime-a.lastToggleTime < 300 {
-		log.Println("CopyMan: Toggle ignored - too rapid")
+		log.Println("Copyman: Toggle ignored - too rapid")
 		return
 	}
 
