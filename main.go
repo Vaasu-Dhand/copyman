@@ -28,11 +28,11 @@ func main() {
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.OnStartup,
 		OnShutdown:       app.OnShutdown,
-		Frameless:        true,
+		Frameless:        false, // Changed to false to show title bar
 		StartHidden:      true,
-		WindowStartState: options.Minimised, // Changed from Minimised to Hidden
+		WindowStartState: options.Minimised,
 		AlwaysOnTop:      false,
-		DisableResize:    false,
+		DisableResize:    true, // Set to true since you want fixed 700x450
 		// Add these for better menu bar app behavior
 		HideWindowOnClose: true,
 		SingleInstanceLock: &options.SingleInstanceLock{
@@ -41,15 +41,15 @@ func main() {
 		},
 		Mac: &mac.Options{
 			TitleBar: &mac.TitleBar{
-				TitlebarAppearsTransparent: true,
-				HideTitle:                  true,
-				HideTitleBar:               false,
-				FullSizeContent:            true,
-				UseToolbar:                 true,
-				HideToolbarSeparator:       true,
+				TitlebarAppearsTransparent: false, // Set to false to show visible title bar
+				HideTitle:                  false, // Show the title
+				HideTitleBar:               false, // Don't hide the title bar
+				FullSizeContent:            false, // Don't use full size content
+				UseToolbar:                 false, // Don't use toolbar
+				HideToolbarSeparator:       true,  // Keep this true
 			},
 			Appearance:           mac.NSAppearanceNameAqua,
-			WebviewIsTransparent: true,
+			WebviewIsTransparent: false, // Set to false for proper title bar display
 			WindowIsTranslucent:  false,
 		},
 		Bind: []interface{}{
