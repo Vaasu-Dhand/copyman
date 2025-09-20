@@ -9,7 +9,6 @@ export const updateFavicon = () => {
     favicon.type = 'image/png';
     favicon.href = '/favicon-dark.png';
 
-    // Add to head
     document.head.appendChild(favicon);
 
     // Also update apple touch icon if you have them
