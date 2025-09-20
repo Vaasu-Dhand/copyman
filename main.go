@@ -20,31 +20,37 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "Copyman",
-		Width:  700, // Increased for keyboard feel
-		Height: 450, // Better proportions for keyboard layout
+		Width:  700,
+		Height: 450,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.OnStartup,
 		OnShutdown:       app.OnShutdown,
-		Frameless:        true, // Keep frameless but add custom titlebar
+		Frameless:        true,
 		StartHidden:      true,
-		WindowStartState: options.Minimised, // Start hidden
-		AlwaysOnTop:      false,             // We control this programmatically
-		DisableResize:    false,             // Allow resize for better UX
+		WindowStartState: options.Minimised, // Changed from Minimised to Hidden
+		AlwaysOnTop:      false,
+		DisableResize:    false,
+		// Add these for better menu bar app behavior
+		HideWindowOnClose: true,
+		SingleInstanceLock: &options.SingleInstanceLock{
+			UniqueId:               "com.copyman.copyman",
+			OnSecondInstanceLaunch: app.OnSecondInstanceLaunch,
+		},
 		Mac: &mac.Options{
 			TitleBar: &mac.TitleBar{
-				TitlebarAppearsTransparent: true,  // Transparent titlebar
-				HideTitle:                  true,  // Hide the title text
-				HideTitleBar:               false, // Show titlebar area
-				FullSizeContent:            true,  // Content extends under titlebar
-				UseToolbar:                 true,  // Use toolbar style
-				HideToolbarSeparator:       true,  // Hide separator line
+				TitlebarAppearsTransparent: true,
+				HideTitle:                  true,
+				HideTitleBar:               false,
+				FullSizeContent:            true,
+				UseToolbar:                 true,
+				HideToolbarSeparator:       true,
 			},
 			Appearance:           mac.NSAppearanceNameAqua,
-			WebviewIsTransparent: true,  // Keep transparent
-			WindowIsTranslucent:  false, // Window background opaque
+			WebviewIsTransparent: true,
+			WindowIsTranslucent:  false,
 		},
 		Bind: []interface{}{
 			app,

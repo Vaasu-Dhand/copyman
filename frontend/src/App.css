@@ -76,21 +76,30 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .keyboard-container {
   background: var(--bg-secondary);
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 
+  box-shadow:
     0 0 0 1px var(--border),
     0 20px 40px rgba(0, 0, 0, 0.15),
     0 8px 16px rgba(0, 0, 0, 0.1);
-  max-width: 600px; /* Increased for horizontal layout */
+  max-width: 600px;
+  /* Increased for horizontal layout */
   width: 90vw;
-  min-width: 500px; /* Increased minimum width */
+  min-width: 500px;
+  /* Increased minimum width */
 }
 
 .keyboard-header {
@@ -125,7 +134,8 @@ body {
 }
 
 .key {
-  width: 90px; /* Fixed width for consistent layout */
+  width: 90px;
+  /* Fixed width for consistent layout */
   height: 70px;
   background: var(--bg-primary);
   border: 1px solid var(--border);
@@ -234,153 +244,169 @@ body {
   color: var(--text-secondary);
 }
 
-/* Settings View */
-.settings-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
+/* Settings View - Horizontal Layout Optimized */
+.settings-container-horizontal {
+  width: 100%;
   height: 100vh;
-  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+  max-width: 700px;
+  max-height: 450px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.settings-header {
-  text-align: center;
-  margin-bottom: 32px;
-  position: relative;
+.settings-header-horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
 }
 
-.back-button {
-  position: absolute;
-  left: 0;
-  top: 0;
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.back-button-horizontal {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 12px;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.back-button:hover {
+.back-button-horizontal:hover {
   background: var(--accent);
   color: white;
   border-color: var(--accent);
 }
 
-.settings-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-}
-
-.settings-subtitle {
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-
-.theme-toggle {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.toggle-header {
+.title-group {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  flex-direction: column;
+  width: 100%;
 }
 
-.toggle-title {
-  font-size: 16px;
-  font-weight: 600;
+.settings-title-horizontal {
+  font-size: 22px;
+  font-weight: 700;
+  width: 100%;
   color: var(--text-primary);
+  line-height: 1.2;
 }
 
-.toggle-switch {
+.settings-subtitle-horizontal {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.theme-toggle-horizontal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.toggle-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.toggle-switch-horizontal {
   position: relative;
-  width: 48px;
-  height: 28px;
+  width: 44px;
+  height: 24px;
   background: var(--border);
-  border-radius: 14px;
+  border-radius: 12px;
   cursor: pointer;
   transition: background 0.3s ease;
+  flex-shrink: 0;
 }
 
-.toggle-switch.active {
+.toggle-switch-horizontal.active {
   background: var(--accent);
 }
 
-.toggle-knob {
+.toggle-knob-horizontal {
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   background: white;
-  border-radius: 12px;
+  border-radius: 10px;
   transition: transform 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.toggle-switch.active .toggle-knob {
+.toggle-switch-horizontal.active .toggle-knob-horizontal {
   transform: translateX(20px);
 }
 
-.toggle-description {
-  font-size: 13px;
-  color: var(--text-secondary);
+.bindings-section-horizontal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.bindings-section {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.bindings-title {
-  font-size: 18px;
+.bindings-title-horizontal {
+  font-size: 16px;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 16px;
+  flex-shrink: 0;
 }
 
-.bindings-grid {
+.bindings-grid-horizontal {
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+  flex: 1;
+  align-content: start;
 }
 
-.binding-item {
+.binding-item-horizontal {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 8px;
   padding: 12px;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   border-radius: 8px;
   border: 1px solid var(--border);
   transition: all 0.2s ease;
+  min-height: 0;
 }
 
-.binding-item:hover {
+.binding-item-horizontal:hover {
   border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.1);
 }
 
-.binding-item:focus-within {
+.binding-item-horizontal:focus-within {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
 
-.binding-number {
-  width: 32px;
-  height: 32px;
+.binding-number-horizontal {
+  width: 24px;
+  height: 24px;
   background: var(--accent);
   color: white;
   border-radius: 6px;
@@ -388,59 +414,26 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: 600;
+  font-size: 12px;
+  align-self: flex-start;
   flex-shrink: 0;
-  font-size: 14px;
 }
 
-.binding-input {
-  flex: 1;
+.binding-input-horizontal {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-primary);
-  padding: 4px 0;
+  padding: 0;
+  resize: none;
+  width: 100%;
+  min-height: 40px;
+  line-height: 1.3;
 }
 
-.binding-input::placeholder {
+.binding-input-horizontal::placeholder {
   color: var(--text-secondary);
-}
-
-/* Responsive design */
-@media (max-width: 600px) {
-  .keyboard-container {
-    padding: 20px;
-    margin: 10px;
-    min-width: 320px;
-  }
-  
-  .keyboard-row {
-    gap: 8px;
-  }
-  
-  .key {
-    width: 70px;
-    height: 60px;
-    padding: 6px;
-  }
-  
-  .key-number {
-    font-size: 16px;
-  }
-  
-  .key-text {
-    font-size: 8px;
-    height: 32px;
-    -webkit-line-clamp: 3;
-  }
-  
-  .settings-container {
-    padding: 16px;
-  }
-  
-  .settings-title {
-    font-size: 24px;
-  }
 }
 
 /* Custom scrollbar */

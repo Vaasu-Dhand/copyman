@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"golang.design/x/clipboard"
 )
@@ -239,4 +240,9 @@ func (a *App) registerHotkeys() {
 	}()
 
 	log.Println("Global hotkeys registered")
+}
+
+func (a *App) OnSecondInstanceLaunch(secondInstanceData options.SecondInstanceData) {
+	// Show the overlay if someone tries to launch again
+	a.ShowOverlay()
 }

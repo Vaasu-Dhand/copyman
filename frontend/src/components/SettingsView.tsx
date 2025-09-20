@@ -49,43 +49,43 @@ const SettingsView: React.FC<SettingsViewProps> = ({
   };
 
   return (
-    <div className="settings-container">
-      <div className="settings-header">
-        <button 
-          className="back-button"
-          onClick={onNavigateBack}
-        >
-          ← Back
-        </button>
-        <div className="settings-title">Settings</div>
-        <div className="settings-subtitle">Customize your clipboard shortcuts</div>
-      </div>
-      
-      <div className="theme-toggle">
-        <div className="toggle-header">
-          <div className="toggle-title">Dark Mode</div>
-          <div 
-            className={`toggle-switch ${settings.theme === 'dark' ? 'active' : ''}`}
-            onClick={toggleTheme}
+    <div className="settings-container-horizontal">
+      {/* Header with back button and theme toggle in same row */}
+      <div className="settings-header-horizontal">
+        <div className="header-left">
+          <button 
+            className="back-button-horizontal"
+            onClick={onNavigateBack}
           >
-            <div className="toggle-knob"></div>
+            ← Back
+          </button>
+          <div className="title-group">
+            <div className="settings-title-horizontal">Settings</div>
+            <div className="settings-subtitle-horizontal">Customize your clipboard shortcuts</div>
           </div>
         </div>
-        <div className="toggle-description">
-          Switch between light and dark appearance
+        
+        <div className="theme-toggle-horizontal">
+          <div className="toggle-label">Dark Mode</div>
+          <div 
+            className={`toggle-switch-horizontal ${settings.theme === 'dark' ? 'active' : ''}`}
+            onClick={toggleTheme}
+          >
+            <div className="toggle-knob-horizontal"></div>
+          </div>
         </div>
       </div>
       
-      <div className="bindings-section">
-        <div className="bindings-title">Key Bindings</div>
-        <div className="bindings-grid">
+      {/* Key bindings in a compact grid */}
+      <div className="bindings-section-horizontal">
+        <div className="bindings-grid-horizontal">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
-            <div key={num} className="binding-item">
-              <div className="binding-number">{num}</div>
+            <div key={num} className="binding-item-horizontal">
+              <div className="binding-number-horizontal">{num}</div>
               <input
                 type="text"
-                className="binding-input"
-                placeholder={`Text for key ${num}...`}
+                className="binding-input-horizontal"
+                placeholder={`Key ${num} text...`}
                 value={localKeyBindings[num.toString()] || ''}
                 onChange={(e) => handleInputChange(num.toString(), e.target.value)}
                 onBlur={() => handleInputBlur(num.toString())}

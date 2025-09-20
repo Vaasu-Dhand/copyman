@@ -26,6 +26,10 @@ export function IsVisible() {
   return window['go']['main']['App']['IsVisible']();
 }
 
+export function OnSecondInstanceLaunch(arg1) {
+  return window['go']['main']['App']['OnSecondInstanceLaunch'](arg1);
+}
+
 export function SaveSettings(arg1) {
   return window['go']['main']['App']['SaveSettings'](arg1);
 }
