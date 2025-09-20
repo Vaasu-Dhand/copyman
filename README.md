@@ -37,12 +37,12 @@ Copyman needs accessibility permissions to work with global hotkeys:
 
 1. **Show Copyman**: Press `Ctrl+Shift+Space`
 2. **Set up text snippets**: Click ⚙️ Settings and bind text to number keys 1-9
-3. **Quick copy**: Press `Cmd+Shift+1-9` to instantly copy and paste your snippets
+3. **Quick copy**: Press `Ctrl+Shift+1-9` to instantly copy and paste your snippets
 
 ### Hotkeys
 
 - `Ctrl+Shift+Space` - Toggle Copyman overlay
-- `Cmd+Shift+1-9` - Quick copy bound text snippets
+- `Ctrl+Shift+1-9` - Quick copy bound text snippets
 - `Esc` - Close overlay (when focused)
 
 ### Examples of What to Store

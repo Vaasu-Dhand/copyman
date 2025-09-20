@@ -67,7 +67,7 @@ jobs:
           
           ### Usage
           - `Ctrl+Shift+Space` to toggle overlay
-          - `Cmd+Shift+1-9` for quick copy
+          - `Ctrl+Shift+1-9` for quick copy
           
           **Full changelog**: https://github.com/${{ github.repository }}/compare/v1.0.0...${{ github.ref_name }}
         draft: false

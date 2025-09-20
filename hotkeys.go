@@ -36,7 +36,7 @@ func (h *HotkeyManager) StartListening() {
 		h.app.ToggleOverlay()
 	})
 
-	// Register number keys 1-9 with Cmd+Shift for quick copy with flash
+	// Register number keys 1-9 with Ctrl+Shift for quick copy with flash
 	for i := 1; i <= 9; i++ {
 		keyStr := strconv.Itoa(i)
 		// Capture the current value of keyStr for the closure
@@ -67,7 +67,7 @@ func (h *HotkeyManager) StartListening() {
 		})
 	}
 
-	log.Println("Copyman: Hotkeys registered - Ctrl+Shift+Space to toggle, Cmd+Shift+1-9 for quick copy")
+	log.Println("Copyman: Hotkeys registered - Ctrl+Shift+Space to toggle, Ctrl+Shift+1-9 for quick copy")
 	log.Println("Copyman: Window will auto-hide after copying")
 
 	// Start the hook event loop
