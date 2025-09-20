@@ -23,9 +23,6 @@
         <string>true</string>
         <key>NSHumanReadableCopyright</key>
         <string>{{.Info.Copyright}}</string>
-        <!-- Hide the app from the dock - this is the key addition -->
-        <key>LSUIElement</key>
-        <true/>
         {{if .Info.FileAssociations}}
         <key>CFBundleDocumentTypes</key>
         <array>

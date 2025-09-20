@@ -10,7 +10,7 @@ build:
 
 # Build for distribution (macOS)
 build-darwin:
-	wails build -platform darwin/amd64,darwin/arm64
+	wails build -platform darwin/universal -clean
 
 # Clean build artifacts
 clean:
