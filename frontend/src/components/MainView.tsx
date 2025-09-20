@@ -13,21 +13,35 @@ const MainView: React.FC<MainViewProps> = ({ settings, onNavigateToSettings }) =
     useEffect(() => {
         // Handle keyboard events
         const handleKeyDown = (event: KeyboardEvent) => {
+            // Always prevent default behavior for keys we handle to stop system beep
+            
             if (event.key === 'Escape') {
+                event.preventDefault(); // Prevent default to stop beep
                 HideOverlay();
+                return;
             }
 
             // Handle number keys 1-9
             if (event.key >= '1' && event.key <= '9') {
+                event.preventDefault(); // This prevents the system beep!
+                event.stopPropagation(); // Stop event bubbling
+                
                 const text = settings.keyBindings[event.key];
                 if (text) {
                     handleCopyText(text, event.key);
+                } else {
+                    // Even if no text is bound, we still prevent the beep
+                    console.log(`No text bound to key ${event.key}`);
+                    // Show brief highlight even for empty keys to indicate the key was processed
+                    setHighlightedKey(event.key);
+                    setTimeout(() => setHighlightedKey(null), 200);
                 }
             }
         };
 
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
+        // Use capture phase to catch events before they bubble up to system
+        window.addEventListener('keydown', handleKeyDown, true);
+        return () => window.removeEventListener('keydown', handleKeyDown, true);
     }, [settings.keyBindings]);
 
     const handleCopyText = async (text: string, keyNumber?: string) => {
@@ -108,7 +122,7 @@ const MainView: React.FC<MainViewProps> = ({ settings, onNavigateToSettings }) =
                         ⚙️ Settings
                     </button>
                     <div className="close-hint">
-                        Press Esc to close • ⌃⇧C to open
+                        Press Esc to close • ⌃⌥1-9 to copy globally
                     </div>
                 </div>
             </div>

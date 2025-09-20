@@ -7,7 +7,7 @@ export const updateFavicon = () => {
     const favicon = document.createElement('link');
     favicon.rel = 'icon';
     favicon.type = 'image/png';
-    favicon.href = '/favicon-light.png';
+    favicon.href = '/favicon-dark.png';
 
     // Add to head
     document.head.appendChild(favicon);
