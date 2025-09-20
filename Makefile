@@ -11,6 +11,7 @@ build:
 # Build for distribution (macOS)
 build-darwin:
 	wails build -platform darwin/universal -clean
+	codesign --force --deep --sign - build/bin/Copyman.app
 
 # Clean build artifacts
 clean:
@@ -44,8 +45,9 @@ deps:
 package-mac: build-darwin
 	@echo "Creating macOS app bundle..."
 	mkdir -p dist
-	cp -r build/bin/copyman.app dist/
+	cp -r build/bin/Copyman.app dist/
 	@echo "App packaged in dist/ directory"
+	@echo "Note: Users need to right-click and select 'Open' for first launch"
 
 # Help
 help:

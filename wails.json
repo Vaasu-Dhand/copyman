@@ -13,8 +13,8 @@
   "info": {
     "companyName": "Copyman",
     "productName": "Copyman",
-    "productVersion": "1.0.0",
-    "copyright": "Copyright © 2025, Your Name",
+    "productVersion": "1.2.0",
+    "copyright": "Copyright © 2025, Vaasu Dhand",
     "comments": "Lightning-fast clipboard manager for macOS"
   },
   "nsisType": "multiple",
